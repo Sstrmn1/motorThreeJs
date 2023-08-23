@@ -1,22 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Button, Alert } from "@mui/material";
+import "./App.css";
+import Pallet from "./clases/pallet";
 
 function App() {
+  const pallet1 = new Pallet(155, 1200, 1200);
+
+  const mostrarAlerta = () => {
+    const mensaje = `El pallet 1 tiene: ${pallet1.altura / 10} cm de alto, ${pallet1.ancho / 10} cm de ancho y ${pallet1.profundidad / 10} cm de profundidad`;
+    window.alert(mensaje);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <Button variant="contained" onClick={mostrarAlerta}>
+          Mostrar Alerta
+        </Button>
       </header>
     </div>
   );
