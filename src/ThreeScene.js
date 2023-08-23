@@ -1,5 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+
 
 function ThreeScene() {
   const sceneRef = useRef(null);
@@ -33,6 +35,12 @@ function ThreeScene() {
     scene.add(grid);
 
     camera.position.z = 5;
+
+    // Add OrbitControls to enable camera rotation
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableZoom = true; // Enable zooming
+    controls.enablePan = false; // Disable panning
+    controls.update();
 
     // Animation loop
     function animate() {
