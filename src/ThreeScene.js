@@ -22,6 +22,15 @@ function ThreeScene() {
 
     sceneRef.current.appendChild(renderer.domElement);
 
+    // Agregar iluminación ambiental
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+    scene.add(ambientLight);
+
+    // Agregar iluminación direccional
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+    directionalLight.position.set(1, 1, 1);
+    scene.add(directionalLight);
+
     // Crear pallet
     const palletGeometry = new THREE.BoxGeometry(1.2, 0.155, 1.2);
     const palletTextureLoader = new THREE.TextureLoader();
@@ -30,12 +39,12 @@ function ThreeScene() {
     const palletTexture3 = palletTextureLoader.load("/textures/1.png");
 
     const palletMaterials = [
-      new THREE.MeshBasicMaterial({ map: palletTexture2 }), // Lado izquierdo/derecho
-      new THREE.MeshBasicMaterial({ map: palletTexture2 }), // Lado izquierdo/derecho
-      new THREE.MeshBasicMaterial({ map: palletTexture3 }), // Frente/trasero
-      new THREE.MeshBasicMaterial({ map: palletTexture3 }), // Frente/trasero
-      new THREE.MeshBasicMaterial({ map: palletTexture1 }), // Tapa
-      new THREE.MeshBasicMaterial({ map: palletTexture1 })  // Tapa
+      new THREE.MeshStandardMaterial({ map: palletTexture2 }), // Lado izquierdo/derecho
+      new THREE.MeshStandardMaterial({ map: palletTexture2 }), // Lado izquierdo/derecho
+      new THREE.MeshStandardMaterial({ map: palletTexture3 }), // Frente/trasero
+      new THREE.MeshStandardMaterial({ map: palletTexture3 }), // Frente/trasero
+      new THREE.MeshStandardMaterial({ map: palletTexture1 }), // Tapa
+      new THREE.MeshStandardMaterial({ map: palletTexture1 })  // Tapa
     ];
 
     const pallet = new THREE.Mesh(palletGeometry, palletMaterials);
@@ -49,12 +58,12 @@ function ThreeScene() {
     const cartonTexture = textureLoader.load("/textures/carton.jpg");
     
     const boxMaterials = [
-      new THREE.MeshBasicMaterial({ map: cartonTexture }), // Lado izquierdo
-      new THREE.MeshBasicMaterial({ map: cartonTexture }), // Lado derecho
-      new THREE.MeshBasicMaterial({ map: cartonTexture }), // Frente
-      new THREE.MeshBasicMaterial({ map: cartonTexture }), // Trasero
-      new THREE.MeshBasicMaterial({ map: cartonTexture }), // Arriba
-      new THREE.MeshBasicMaterial({ map: cartonTexture })  // Abajo
+      new THREE.MeshStandardMaterial({ map: cartonTexture }), // Lado izquierdo
+      new THREE.MeshStandardMaterial({ map: cartonTexture }), // Lado derecho
+      new THREE.MeshStandardMaterial({ map: cartonTexture }), // Frente
+      new THREE.MeshStandardMaterial({ map: cartonTexture }), // Trasero
+      new THREE.MeshStandardMaterial({ map: cartonTexture }), // Arriba
+      new THREE.MeshStandardMaterial({ map: cartonTexture })  // Abajo
     ];
     
     const box = new THREE.Mesh(boxGeometry, boxMaterials);
