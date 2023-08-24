@@ -2,7 +2,6 @@ import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
-
 function ThreeScene() {
   const sceneRef = useRef(null);
 
@@ -23,15 +22,16 @@ function ThreeScene() {
 
     sceneRef.current.appendChild(renderer.domElement);
 
-    // Create a cube
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
+    // Crear pallet
+    const geometry = new THREE.BoxGeometry(1.2, 0.155, 1.2);
     const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
     const cube = new THREE.Mesh(geometry, material);
     scene.add(cube);
 
     // Add a grid as the floor
     const grid = new THREE.GridHelper(10, 10, 0xffffff, 0x000000);
-    grid.position.y = -0.5; // Position the grid slightly below the cube
+    // grid.position.y = -0.5; // Position the grid slightly below the cube
+    grid.position.y = -0.1;
     scene.add(grid);
 
     camera.position.z = 5;
