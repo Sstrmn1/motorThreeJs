@@ -27,9 +27,9 @@ function ThreeScene() {
 
     // Cargar las texturas
     const textureLoader = new THREE.TextureLoader();
-    const texture1 = textureLoader.load("texturas/pallet/1.png");
-    const texture2 = textureLoader.load("texturas/pallet/2.png");
-    const texture3 = textureLoader.load("texturas/pallet/3.png");
+    const texture1 = textureLoader.load("/textures/3.png");
+    const texture2 = textureLoader.load("/textures/2.png");
+    const texture3 = textureLoader.load("/textures/1.png");
 
     const materials = [
       new THREE.MeshBasicMaterial({ map: texture2 }), // Lado izquierdo/derecho
