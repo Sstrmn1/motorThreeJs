@@ -24,13 +24,27 @@ function ThreeScene() {
 
     // Crear pallet
     const geometry = new THREE.BoxGeometry(1.2, 0.155, 1.2);
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    const cube = new THREE.Mesh(geometry, material);
+
+    // Cargar las texturas
+    const textureLoader = new THREE.TextureLoader();
+    const texture1 = textureLoader.load("texturas/pallet/1.png");
+    const texture2 = textureLoader.load("texturas/pallet/2.png");
+    const texture3 = textureLoader.load("texturas/pallet/3.png");
+
+    const materials = [
+      new THREE.MeshBasicMaterial({ map: texture2 }), // Lado izquierdo/derecho
+      new THREE.MeshBasicMaterial({ map: texture2 }), // Lado izquierdo/derecho
+      new THREE.MeshBasicMaterial({ map: texture3 }), // Frente/trasero
+      new THREE.MeshBasicMaterial({ map: texture3 }), // Frente/trasero
+      new THREE.MeshBasicMaterial({ map: texture1 }), // Tapa
+      new THREE.MeshBasicMaterial({ map: texture1 })  // Tapa
+    ];
+
+    const cube = new THREE.Mesh(geometry, materials);
     scene.add(cube);
 
     // Add a grid as the floor
     const grid = new THREE.GridHelper(10, 10, 0xffffff, 0x000000);
-    // grid.position.y = -0.5; // Position the grid slightly below the cube
     grid.position.y = -0.1;
     scene.add(grid);
 
