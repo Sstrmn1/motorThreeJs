@@ -53,6 +53,7 @@ function ThreeScene() {
     ];
 
     const pallet = new THREE.Mesh(palletGeometry, palletMaterials);
+    pallet.position.set(4, 0, 4);
     scene.add(pallet);
 
     // Crear caja
@@ -72,7 +73,7 @@ function ThreeScene() {
     ];
 
     const box = new THREE.Mesh(boxGeometry, boxMaterials);
-    box.position.set(0, 0.155 + 0.2 / 2, 0); // Ubicar encima del pallet
+    box.position.set(4, 0.155 + 0.2 / 2, 4); // Ubicar encima del pallet
     scene.add(box);
 
     // Agregar una rejilla como el piso
@@ -81,19 +82,23 @@ function ThreeScene() {
     scene.add(grid);
 
     // camera.position.z = 5;
-    camera.position.set(1.5, 1, 0.5);
+    camera.position.set(5.5, 1, 5);
 
     // Add OrbitControls to enable camera rotation
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableZoom = true; // Enable zooming
     controls.enablePan = true;
     controls.update();
+    // Establecer el punto de enfoque (target) para el OrbitControls
+    controls.target.set(4, 0, 4);
 
     // Animation loop
     function animate() {
       requestAnimationFrame(animate);
       renderer.render(scene, camera);
     }
+
+    camera.lookAt(new THREE.Vector3(4, 0, 4));
 
     animate();
   }, []);
