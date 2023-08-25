@@ -86,7 +86,7 @@ function ThreeScene() {
     // Add OrbitControls to enable camera rotation
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableZoom = true; // Enable zooming
-    controls.enablePan = false; // Disable panning
+    controls.enablePan = true;
     controls.update();
 
     // Animation loop
