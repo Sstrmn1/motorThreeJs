@@ -2,6 +2,33 @@ import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
+const coordenadas = [
+  [4, 0, 4],
+  [2, 0, 4],
+  [0, 0, 4],
+  [-2, 0, 4],
+  [-4, 0, 4],
+  [4, 0, 2],
+  [2, 0, 2],
+  [0, 0, 2],
+  [-2, 0, 2],
+  [-4, 0, 2],
+  [4, 0, 0],
+  [2, 0, 0],
+  [0, 0, 0],
+  [-2, 0, 0],
+  [-4, 0, 0],
+  [4, 0, -2],
+  [2, 0, -2],
+  [0, 0, -2],
+  [-2, 0, -2],
+  [-4, 0, -2],
+  [4, 0, -4],
+  [2, 0, -4],
+  [0, 0, -4],
+  [-2, 0, -4],
+  [-4, 0, -4]
+];
 function ThreeScene() {
   const sceneRef = useRef(null);
 
@@ -44,12 +71,12 @@ function ThreeScene() {
     const palletTextureTapa = palletTextureLoader.load("/textures/1.png");
 
     const palletMaterials = [
-      new THREE.MeshStandardMaterial({ map: palletTextureFrente }), 
-      new THREE.MeshStandardMaterial({ map: palletTextureFrente }), 
-      new THREE.MeshStandardMaterial({ map: palletTextureTapa }), 
-      new THREE.MeshStandardMaterial({ map: palletTextureTapa }), 
-      new THREE.MeshStandardMaterial({ map: palletTextureLado }), 
-      new THREE.MeshStandardMaterial({ map: palletTextureLado }), 
+      new THREE.MeshStandardMaterial({ map: palletTextureFrente }),
+      new THREE.MeshStandardMaterial({ map: palletTextureFrente }),
+      new THREE.MeshStandardMaterial({ map: palletTextureTapa }),
+      new THREE.MeshStandardMaterial({ map: palletTextureTapa }),
+      new THREE.MeshStandardMaterial({ map: palletTextureLado }),
+      new THREE.MeshStandardMaterial({ map: palletTextureLado }),
     ];
 
     const pallet = new THREE.Mesh(palletGeometry, palletMaterials);
@@ -102,7 +129,7 @@ function ThreeScene() {
 
     animate();
   }, []);
-
+  console.log(`${coordenadas[0]} ${coordenadas[24]}`);
   return <div ref={sceneRef}></div>;
 }
 
