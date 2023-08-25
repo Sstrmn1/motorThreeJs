@@ -39,17 +39,17 @@ function ThreeScene() {
     // Crear pallet
     const palletGeometry = new THREE.BoxGeometry(1.2, 0.155, 1.2);
     const palletTextureLoader = new THREE.TextureLoader();
-    const palletTexture1 = palletTextureLoader.load("/textures/3.png");
-    const palletTexture2 = palletTextureLoader.load("/textures/2.png");
-    const palletTexture3 = palletTextureLoader.load("/textures/1.png");
+    const palletTextureLado = palletTextureLoader.load("/textures/3.png");
+    const palletTextureFrente = palletTextureLoader.load("/textures/2.png");
+    const palletTextureTapa = palletTextureLoader.load("/textures/1.png");
 
     const palletMaterials = [
-      new THREE.MeshStandardMaterial({ map: palletTexture2 }), // Lado izquierdo/derecho
-      new THREE.MeshStandardMaterial({ map: palletTexture2 }), // Lado izquierdo/derecho
-      new THREE.MeshStandardMaterial({ map: palletTexture3 }), // Frente/trasero
-      new THREE.MeshStandardMaterial({ map: palletTexture3 }), // Frente/trasero
-      new THREE.MeshStandardMaterial({ map: palletTexture1 }), // Tapa
-      new THREE.MeshStandardMaterial({ map: palletTexture1 }), // Tapa
+      new THREE.MeshStandardMaterial({ map: palletTextureFrente }), 
+      new THREE.MeshStandardMaterial({ map: palletTextureFrente }), 
+      new THREE.MeshStandardMaterial({ map: palletTextureTapa }), 
+      new THREE.MeshStandardMaterial({ map: palletTextureTapa }), 
+      new THREE.MeshStandardMaterial({ map: palletTextureLado }), 
+      new THREE.MeshStandardMaterial({ map: palletTextureLado }), 
     ];
 
     const pallet = new THREE.Mesh(palletGeometry, palletMaterials);
