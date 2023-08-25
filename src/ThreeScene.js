@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
+// Elementos para funcion de prueba empiezan aqui
 const coordenadas = [
   [4, 0, 4],
   [2, 0, 4],
@@ -27,8 +28,28 @@ const coordenadas = [
   [2, 0, -4],
   [0, 0, -4],
   [-2, 0, -4],
-  [-4, 0, -4]
+  [-4, 0, -4],
 ];
+
+const volumenEstandar = 1.7;
+const volumenRecibido = 15.3;
+const volumenRatio = Math.ceil(volumenRecibido / volumenEstandar);
+const volumenResiduo = parseFloat((volumenRecibido % volumenEstandar).toFixed(5));
+for (let index = 0; index <= volumenRatio; index++) {
+  if (index === volumenRatio) {
+    if (volumenResiduo === 0.00000) {
+      console.log(`El volumen de la ultima caja es 1.7`);
+    } else {
+      console.log(`El volumen de la ultima caja ${volumenResiduo}`);
+    }
+    console.log("esta es la ultima fila");
+  }
+
+  console.log(`Paleta ubicada en la coordenada: ${coordenadas[index]}`);
+}
+
+// aqui termina funcion de prueba
+
 function ThreeScene() {
   const sceneRef = useRef(null);
 
@@ -129,7 +150,7 @@ function ThreeScene() {
 
     animate();
   }, []);
-  console.log(`${coordenadas[0]} ${coordenadas[24]}`);
+  console.log(`${coordenadas[0][2]}`);
   return <div ref={sceneRef}></div>;
 }
 
