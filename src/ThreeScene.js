@@ -26,10 +26,15 @@ function ThreeScene() {
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
     scene.add(ambientLight);
 
-    // Agregar iluminación direccional
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
-    directionalLight.position.set(1, 1, 1);
-    scene.add(directionalLight);
+    // Agregar iluminación direccional 1
+    const directionalLight1 = new THREE.DirectionalLight(0xffffff, 0.8);
+    directionalLight1.position.set(1, 0.2, 0.1);
+    scene.add(directionalLight1);
+
+    // Agregar iluminación direccional 2
+    const directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.5);
+    directionalLight2.position.set(3, 0.5, 1);
+    scene.add(directionalLight2);
 
     // Crear pallet
     const palletGeometry = new THREE.BoxGeometry(1.2, 0.155, 1.2);
@@ -44,7 +49,7 @@ function ThreeScene() {
       new THREE.MeshStandardMaterial({ map: palletTexture3 }), // Frente/trasero
       new THREE.MeshStandardMaterial({ map: palletTexture3 }), // Frente/trasero
       new THREE.MeshStandardMaterial({ map: palletTexture1 }), // Tapa
-      new THREE.MeshStandardMaterial({ map: palletTexture1 })  // Tapa
+      new THREE.MeshStandardMaterial({ map: palletTexture1 }), // Tapa
     ];
 
     const pallet = new THREE.Mesh(palletGeometry, palletMaterials);
@@ -52,20 +57,20 @@ function ThreeScene() {
 
     // Crear caja
     const boxGeometry = new THREE.BoxGeometry(0.3, 0.4, 0.2);
-    
+
     // Cargar la textura del cartón
     const textureLoader = new THREE.TextureLoader();
     const cartonTexture = textureLoader.load("/textures/carton.jpg");
-    
+
     const boxMaterials = [
       new THREE.MeshStandardMaterial({ map: cartonTexture }), // Lado izquierdo
       new THREE.MeshStandardMaterial({ map: cartonTexture }), // Lado derecho
       new THREE.MeshStandardMaterial({ map: cartonTexture }), // Frente
       new THREE.MeshStandardMaterial({ map: cartonTexture }), // Trasero
       new THREE.MeshStandardMaterial({ map: cartonTexture }), // Arriba
-      new THREE.MeshStandardMaterial({ map: cartonTexture })  // Abajo
+      new THREE.MeshStandardMaterial({ map: cartonTexture }), // Abajo
     ];
-    
+
     const box = new THREE.Mesh(boxGeometry, boxMaterials);
     box.position.set(0, 0.155 + 0.2 / 2, 0); // Ubicar encima del pallet
     scene.add(box);
@@ -75,7 +80,8 @@ function ThreeScene() {
     grid.position.y = -0.1;
     scene.add(grid);
 
-    camera.position.z = 5;
+    // camera.position.z = 5;
+    camera.position.set(1.5, 1, 0.5);
 
     // Add OrbitControls to enable camera rotation
     const controls = new OrbitControls(camera, renderer.domElement);
