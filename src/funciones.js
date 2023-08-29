@@ -25,3 +25,9 @@ export function crearMatriz(dividendo, divisor) {
   }
   console.log(matriz);
 }
+
+export function calcularLados(dividendo, divisor) {
+  let relacion = dividendo / divisor;
+  let lado = Math.ceil(Math.sqrt(relacion));
+  return lado*2
+}
