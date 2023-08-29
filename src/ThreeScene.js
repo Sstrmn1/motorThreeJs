@@ -33,7 +33,7 @@ const coordenadas = [
 ];
 
 // Elementos para funcion de prueba empiezan aqui
-const volumenEstandar = 1;
+const volumenEstandar = 0.5;
 const volumenRecibido = 15.35;
 const volumenRatio = volumenRecibido / volumenEstandar;
 console.log(volumenRatio);
@@ -112,8 +112,9 @@ function ThreeScene() {
 
 
     // Crear caja
+    let ladoCaja = Math.cbrt(volumenEstandar);
 
-    const boxGeometry = new THREE.BoxGeometry(Math.cbrt(volumenEstandar), Math.cbrt(volumenEstandar), Math.cbrt(volumenEstandar));
+    const boxGeometry = new THREE.BoxGeometry(ladoCaja, ladoCaja, ladoCaja);
 
     // Cargar la textura del cartón
     const textureLoader = new THREE.TextureLoader();
@@ -130,7 +131,7 @@ function ThreeScene() {
 
 
     const box = new THREE.Mesh(boxGeometry, boxMaterials);
-    box.position.set(4, Math.cbrt(volumenEstandar)/2, 4); // Ubicar encima del pallet
+    box.position.set(4, ladoCaja/2, 4); // Ubicar encima del pallet
     scene.add(box);
 
     const pallet = new THREE.Mesh(palletGeometry, palletMaterials);
