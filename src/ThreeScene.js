@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { volumenAPot5 } from "./funciones";
 
 // Elementos para funcion de prueba empiezan aqui
 const coordenadas = [
@@ -32,20 +33,27 @@ const coordenadas = [
 ];
 
 const volumenEstandar = 1.7;
-const volumenRecibido = 15.3;
-const volumenRatio = Math.ceil(volumenRecibido / volumenEstandar);
-const volumenResiduo = parseFloat((volumenRecibido % volumenEstandar).toFixed(5));
-for (let index = 0; index <= volumenRatio; index++) {
-  if (index === volumenRatio) {
-    if (volumenResiduo === 0.00000) {
-      console.log(`El volumen de la ultima caja es 1.7`);
-    } else {
-      console.log(`El volumen de la ultima caja ${volumenResiduo}`);
-    }
-    console.log("esta es la ultima fila");
-  }
+const volumenRecibido = 15.35;
+const volumenRatio = volumenRecibido / volumenEstandar;
+console.log(volumenRatio);
 
-  console.log(`Paleta ubicada en la coordenada: ${coordenadas[index]}`);
+// Calcula el residuo con la funcion volAPot5 que fija a 5 decimales multiplica por 10^5, luego lo divide entre 10/5
+let volumenResiduo =
+  (volumenAPot5(volumenRecibido) % volumenAPot5(volumenEstandar)) /
+  Math.pow(10, 5);
+console.log(volumenResiduo);
+for (let index = 0; index < volumenRatio; index++) {
+  if (volumenRatio - index < 1) {
+    console.log("Esta es la ultima paleta");
+    console.log(
+      `Palet numero ${index}, ubicada en coordenada ${coordenadas[index]}`
+    );
+    console.log(`volumen de la carga: ${volumenResiduo} `);
+  } else {
+    console.log(
+      `Palet numero ${index}, ubicada en coordenada ${coordenadas[index]}`
+    );
+  }
 }
 
 // aqui termina funcion de prueba
@@ -100,9 +108,7 @@ function ThreeScene() {
       new THREE.MeshStandardMaterial({ map: palletTextureLado }),
     ];
 
-    const pallet = new THREE.Mesh(palletGeometry, palletMaterials);
-    pallet.position.set(4, 0, 4);
-    scene.add(pallet);
+
 
     // Crear caja
     const boxGeometry = new THREE.BoxGeometry(0.3, 0.4, 0.2);
@@ -123,6 +129,10 @@ function ThreeScene() {
     const box = new THREE.Mesh(boxGeometry, boxMaterials);
     box.position.set(4, 0.155 + 0.2 / 2, 4); // Ubicar encima del pallet
     scene.add(box);
+
+    const pallet = new THREE.Mesh(palletGeometry, palletMaterials);
+    pallet.position.set(4, 0, 4);
+    scene.add(pallet);
 
     // Agregar una rejilla como el piso
     const grid = new THREE.GridHelper(10, 10, 0xffffff, 0x000000);
@@ -150,7 +160,7 @@ function ThreeScene() {
 
     animate();
   }, []);
-  console.log(`${coordenadas[0][2]}`);
+  // console.log(`${coordenadas[0][2]}`);
   return <div ref={sceneRef}></div>;
 }
 
