@@ -3,7 +3,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { volumenAPot5 } from "./funciones";
 
-// Elementos para funcion de prueba empiezan aqui
+
 const coordenadas = [
   [4, 0, 4],
   [2, 0, 4],
@@ -32,12 +32,13 @@ const coordenadas = [
   [-4, 0, -4],
 ];
 
-const volumenEstandar = 1.7;
+// Elementos para funcion de prueba empiezan aqui
+const volumenEstandar = 1;
 const volumenRecibido = 15.35;
 const volumenRatio = volumenRecibido / volumenEstandar;
 console.log(volumenRatio);
 
-// Calcula el residuo con la funcion volAPot5 que fija a 5 decimales multiplica por 10^5, luego lo divide entre 10/5
+// Calcula el residuo con la funcion volAPot5 que fija a 5 decimales multiplica por 10^5, luego lo divide entre 10^5
 let volumenResiduo =
   (volumenAPot5(volumenRecibido) % volumenAPot5(volumenEstandar)) /
   Math.pow(10, 5);
@@ -111,7 +112,8 @@ function ThreeScene() {
 
 
     // Crear caja
-    const boxGeometry = new THREE.BoxGeometry(0.3, 0.4, 0.2);
+
+    const boxGeometry = new THREE.BoxGeometry(Math.cbrt(volumenEstandar), Math.cbrt(volumenEstandar), Math.cbrt(volumenEstandar));
 
     // Cargar la textura del cartón
     const textureLoader = new THREE.TextureLoader();
@@ -126,8 +128,9 @@ function ThreeScene() {
       new THREE.MeshStandardMaterial({ map: cartonTexture }), // Abajo
     ];
 
+
     const box = new THREE.Mesh(boxGeometry, boxMaterials);
-    box.position.set(4, 0.155 + 0.2 / 2, 4); // Ubicar encima del pallet
+    box.position.set(4, Math.cbrt(volumenEstandar)/2, 4); // Ubicar encima del pallet
     scene.add(box);
 
     const pallet = new THREE.Mesh(palletGeometry, palletMaterials);
