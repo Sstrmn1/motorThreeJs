@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { calcularLados, crearCoordenadas, crearMatriz } from "./funciones";
+import { floorPowerOfTwo } from "three/src/math/MathUtils";
 
 function ThreeScene2() {
   const sceneRef = useRef(null);
@@ -31,8 +32,8 @@ function ThreeScene2() {
     // let volumenCarga = window.prompt("volumen de carga...");
     // let volumenEstandar = window.prompt("volumen estandar");
 
-    let volumenCarga = 60;
-    let volumenEstandar = 2;
+    let volumenCarga = 11;
+    let volumenEstandar = 1;
 
     // crearMatriz(volumenCarga, volumenEstandar);
 
@@ -41,9 +42,28 @@ function ThreeScene2() {
     scene.add(grid);
 
     let coordenadas = crearCoordenadas(volumenCarga, volumenEstandar);
-    console.log(coordenadas);
+    
+    let coordenadasSpread = []
+    coordenadas.forEach(fila => {
+      coordenadasSpread.push(...fila)
+    });
+    // console.log(coordenadas);
+    console.log(coordenadasSpread);
 
-    function renderizarCajas(volEntrada, volUnidad) {}
+    
+
+    function renderizarCajas(volEntrada, volUnidad, coordenadas) {
+        let ladoCaja = Math.cbrt(volUnidad);
+        const geometriaCaja = new THREE.BoxGeometry(ladoCaja, ladoCaja, ladoCaja);
+        let relacion = Math.ceil(volEntrada/volUnidad)
+        for (let index = 0; index < relacion; index++) {
+          const caja = new THREE.Mesh(geometriaCaja)
+          caja.position.set(coordenadas[index][0], ladoCaja/2,coordenadas[index][1])
+          scene.add(caja);
+        }
+    }
+
+    renderizarCajas(volumenCarga,volumenEstandar,coordenadasSpread);
 
     // Animation loop
     function animate() {
