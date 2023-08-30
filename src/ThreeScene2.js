@@ -31,15 +31,17 @@ function ThreeScene2() {
     // let volumenCarga = window.prompt("volumen de carga...");
     // let volumenEstandar = window.prompt("volumen estandar");
 
-    let volumenCarga = 20;
+    let volumenCarga = 60;
     let volumenEstandar = 2;
 
-    crearCoordenadas(volumenCarga, volumenEstandar);
     // crearMatriz(volumenCarga, volumenEstandar);
 
-    let lado = calcularLados(volumenCarga, volumenEstandar);
-    const grid = new THREE.GridHelper(lado, lado, 0xffffff, 0x000000);
+    let longitudLado = calcularLados(volumenCarga, volumenEstandar);
+    const grid = new THREE.GridHelper(longitudLado, longitudLado, 0xffffff, 0x000000);
     scene.add(grid);
+
+    let coordenadas = crearCoordenadas(volumenCarga, volumenEstandar);
+    console.log(coordenadas);
 
     function renderizarCajas(volEntrada, volUnidad) {}
 
