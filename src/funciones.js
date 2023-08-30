@@ -21,7 +21,7 @@ export function crearMatriz(dividendo, divisor) {
       fila.push(contador);
     }
     matriz.push(fila);
-    fila = []
+    fila = [];
   }
   console.log(matriz);
 }
@@ -29,5 +29,15 @@ export function crearMatriz(dividendo, divisor) {
 export function calcularLados(dividendo, divisor) {
   let relacion = dividendo / divisor;
   let lado = Math.ceil(Math.sqrt(relacion));
-  return lado*2
+  // return lado * 1; 
+  return lado * 2; 
+  // Este es el retorno adecuado, puesto que el pallet debe ser ubicado en el origen de 4 cuadriculas
+}
+
+export function crearCoordenadas(volumenTotal, volumenUnitario) {
+  let coordenadas = [];
+  let punto = [0, 0, 0];
+  let relacion = volumenTotal / volumenUnitario;
+  let lado = Math.ceil(Math.sqrt(relacion));
+  
 }

@@ -26,12 +26,18 @@ function ThreeScene2() {
     controls.update();
 
     // Agregar una rejilla como el piso
+    // Estos datos tienen que recibirse desde otro componente donde se define el volumen de carga y 
+    // el volumen estandar
     let volumenCarga = window.prompt("volumen de carga...");
     let volumenEstandar = window.prompt("volumen estandar");
 
     let lado = calcularLados(volumenCarga, volumenEstandar);
     const grid = new THREE.GridHelper(lado, lado, 0xffffff, 0x000000);
     scene.add(grid);
+
+    function renderizarCajas(volEntrada, volUnidad) {
+      
+    }
 
     // Animation loop
     function animate() {
