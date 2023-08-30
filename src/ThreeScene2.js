@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { calcularLados } from "./funciones";
+import { calcularLados, crearCoordenadas, crearMatriz } from "./funciones";
 
 function ThreeScene2() {
   const sceneRef = useRef(null);
@@ -26,18 +26,19 @@ function ThreeScene2() {
     controls.update();
 
     // Agregar una rejilla como el piso
-    // Estos datos tienen que recibirse desde otro componente donde se define el volumen de carga y 
+    // Estos datos tienen que recibirse desde otro componente donde se define el volumen de carga y
     // el volumen estandar
     let volumenCarga = window.prompt("volumen de carga...");
     let volumenEstandar = window.prompt("volumen estandar");
+
+    crearCoordenadas(volumenCarga, volumenEstandar);
+    crearMatriz(volumenCarga, volumenEstandar);
 
     let lado = calcularLados(volumenCarga, volumenEstandar);
     const grid = new THREE.GridHelper(lado, lado, 0xffffff, 0x000000);
     scene.add(grid);
 
-    function renderizarCajas(volEntrada, volUnidad) {
-      
-    }
+    function renderizarCajas(volEntrada, volUnidad) {}
 
     // Animation loop
     function animate() {
