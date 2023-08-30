@@ -34,23 +34,34 @@ export function calcularLados(dividendo, divisor) {
   // Este es el retorno adecuado, puesto que el pallet debe ser ubicado en el origen de 4 cuadriculas
 }
 
+
+/* 
+Funcion que crea y retorna un mapa de coordenadas a partir de una 
+relacion entre volumen total y volumen unitario.
+Los puntos de las coordenadas representan la ubicacion central de un
+area conformada por 4 cuadros. 
+Por lo tanto, para albergar como minimo una coordenada, se requiere
+un area de 2 cuadros por lado (2x2) Para 4 coordenadas, 4x4 y asi
+sucesivamente
+*/
 export function crearCoordenadas(volumenTotal, volumenUnitario) {
   let coordenadas = [];
-  let punto = [0, 0];
   let fila = [];
   let relacion = volumenTotal / volumenUnitario;
   let lado = Math.ceil(Math.sqrt(relacion));
-  let cuadros = lado*2;
-  let puntoInicial = [(cuadros-1)-lado, (cuadros-1)-lado]
+  let cuadrosPorLado = lado * 2;
+  let xInicial = cuadrosPorLado - 1 - lado;
+  let puntoInicial = [xInicial, xInicial];
 
   for (let i = 0; i < lado; i++) {
-    punto[0] = i * 2;
     for (let j = 0; j < lado; j++) {
-      punto[1] = j * 2;
-      fila.push(punto);
+      fila.push(puntoInicial.slice());
+      puntoInicial[0] = puntoInicial[0] - (cuadrosPorLado/lado);
     }
     coordenadas.push(fila);
+    puntoInicial[0] = xInicial;
+    puntoInicial[1] = puntoInicial[1] - (cuadrosPorLado/lado);
     fila = [];
   }
-  console.log(coordenadas);
+  return coordenadas;
 }
