@@ -52,7 +52,7 @@ function ThreeScene2() {
 
     
 
-    function renderizarCajas(volEntrada, volUnidad, coordenadas) {
+    function renderizarObjetos(volEntrada, volUnidad, coordenadas) {
         let ladoCaja = Math.cbrt(volUnidad);
         const geometriaCaja = new THREE.BoxGeometry(ladoCaja, ladoCaja, ladoCaja);
         let relacion = Math.ceil(volEntrada/volUnidad)
@@ -63,7 +63,7 @@ function ThreeScene2() {
         }
     }
 
-    renderizarCajas(volumenCarga,volumenEstandar,coordenadasSpread);
+    renderizarObjetos(volumenCarga,volumenEstandar,coordenadasSpread);
 
     // Animation loop
     function animate() {

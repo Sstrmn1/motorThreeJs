@@ -1,6 +1,6 @@
-// Recibe un numero
-// Si no es decimal retorna el mismo numero
-// Si es decimal fija los decimales a 5 y los multiplica a por potencia 10^5
+/* Recibe un numero
+Si no es decimal retorna el mismo numero
+Si es decimal fija los decimales a 5 y los multiplica a por potencia 10^5 */
 export function volumenAPot5(volumen) {
   if (Math.floor(volumen) === volumen) {
     return volumen;
@@ -9,6 +9,8 @@ export function volumenAPot5(volumen) {
   }
 }
 
+
+// Crea una matriz a partir de una relacion entre dos numeros, solo por prueba.
 export function crearMatriz(dividendo, divisor) {
   let relacion = dividendo / divisor;
   let lado = Math.ceil(Math.sqrt(relacion));
@@ -34,7 +36,6 @@ export function calcularLados(dividendo, divisor) {
   // Este es el retorno adecuado, puesto que el pallet debe ser ubicado en el origen de 4 cuadriculas
 }
 
-
 /* 
 Funcion que crea y retorna un mapa de coordenadas a partir de una 
 relacion entre volumen total y volumen unitario.
@@ -56,11 +57,11 @@ export function crearCoordenadas(volumenTotal, volumenUnitario) {
   for (let i = 0; i < lado; i++) {
     for (let j = 0; j < lado; j++) {
       fila.push(puntoInicial.slice());
-      puntoInicial[0] = puntoInicial[0] - (cuadrosPorLado/lado);
+      puntoInicial[0] = puntoInicial[0] - cuadrosPorLado / lado;
     }
     coordenadas.push(fila);
     puntoInicial[0] = xInicial;
-    puntoInicial[1] = puntoInicial[1] - (cuadrosPorLado/lado);
+    puntoInicial[1] = puntoInicial[1] - cuadrosPorLado / lado;
     fila = [];
   }
   return coordenadas;
