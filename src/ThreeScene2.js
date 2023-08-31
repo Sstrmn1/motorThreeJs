@@ -114,7 +114,12 @@ function ThreeScene2() {
 
     // Renderizar objetos, puesta en escena
 
+    /* Para el renderizador se usa un bucle que se 
+    repite de acuerdo a la magnitud de la relacion */
+    
     for (let index = 0; index < relacion; index++) {
+      /* Determinar si es la ultima iteracion para evaluar la ultima
+      caja, si se usa un volumen residuo o unitario */
       if (index === relacion - 1) {
         let cajaUltima = {};
         if (residuo === 0) {
@@ -130,6 +135,9 @@ function ThreeScene2() {
         );
         scene.add(cajaUltima);
       } else {
+        /* En todo otro caso simplemente se renderiza cajas con
+        volumen unitario. Si el volumen de entrada es menor al volumen
+        unitario, entonces se renderiza con las dimensiones del residuo */
         let caja = {};
         if (volumenEntrada < volumenUnitario) {
           caja = new THREE.Mesh(geometriaCajaResiduo, boxMaterials);
@@ -144,7 +152,7 @@ function ThreeScene2() {
         );
         scene.add(caja);
       }
-
+      // Las pallets se renderizan con cada iteracion
       let pallet = new THREE.Mesh(geometriaPallet, palletMaterials);
 
       pallet.position.set(
