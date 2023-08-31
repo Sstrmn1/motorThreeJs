@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { calcularLados, crearCoordenadas, crearMatriz } from "./funciones";
+import { calcularLados, crearCoordenadas, crearMatriz, residuoFlotante } from "./funciones";
 import { floorPowerOfTwo } from "three/src/math/MathUtils";
 
 function ThreeScene2() {
@@ -30,8 +30,8 @@ function ThreeScene2() {
     Estos datos tienen que recibirse desde otro componente donde se define el volumen de carga y
     el volumen estandar */
 
-    let volumenEntrada = 7;
-    let volumenUnitario = 1;
+    let volumenEntrada = 7.654;
+    let volumenUnitario = 1.544;
 
     // crearMatriz(volumenEntrada, volumenUnitario);
 
@@ -51,7 +51,9 @@ function ThreeScene2() {
       coordenadasSpread.push(...fila);
     });
     // console.log(coordenadas);
-    console.log(coordenadasSpread);
+    // console.log(coordenadasSpread);
+    let residuo = residuoFlotante(volumenEntrada, volumenUnitario);
+    console.log(residuo);
 
     // Renderizar objetos
     let ladoCaja = Math.cbrt(volumenUnitario);

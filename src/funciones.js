@@ -9,8 +9,15 @@ export function volumenAPot5(volumen) {
   }
 }
 
+export function residuoFlotante(dividendo, divisor) {  
+  dividendo = dividendo.toFixed(5) * Math.pow(10, 5);
+  divisor = divisor.toFixed(5) * Math.pow(10, 5);
+  let residuo = dividendo % divisor;
+  residuo = residuo / Math.pow(10,5);
+  return residuo
+}
 
-// Crea una matriz a partir de una relacion entre dos numeros, solo por prueba. 
+// Crea una matriz a partir de una relacion entre dos numeros, solo por prueba.
 export function crearMatriz(dividendo, divisor) {
   let relacion = dividendo / divisor;
   let lado = Math.ceil(Math.sqrt(relacion));
