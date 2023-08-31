@@ -26,11 +26,9 @@ function ThreeScene2() {
     controls.enablePan = true;
     controls.update();
 
-    // Agregar una rejilla como el piso
-    // Estos datos tienen que recibirse desde otro componente donde se define el volumen de carga y
-    // el volumen estandar
-    // let volumenCarga = window.prompt("volumen de carga...");
-    // let volumenEstandar = window.prompt("volumen estandar");
+    /*   Agregar una rejilla como el piso
+    Estos datos tienen que recibirse desde otro componente donde se define el volumen de carga y
+    el volumen estandar */
 
     let volumenCarga = 11;
     let volumenEstandar = 1;
@@ -38,32 +36,39 @@ function ThreeScene2() {
     // crearMatriz(volumenCarga, volumenEstandar);
 
     let longitudLado = calcularLados(volumenCarga, volumenEstandar);
-    const grid = new THREE.GridHelper(longitudLado, longitudLado, 0xffffff, 0x000000);
+    const grid = new THREE.GridHelper(
+      longitudLado,
+      longitudLado,
+      0xffffff,
+      0x000000
+    );
     scene.add(grid);
 
     let coordenadas = crearCoordenadas(volumenCarga, volumenEstandar);
-    
-    let coordenadasSpread = []
-    coordenadas.forEach(fila => {
-      coordenadasSpread.push(...fila)
+
+    let coordenadasSpread = [];
+    coordenadas.forEach((fila) => {
+      coordenadasSpread.push(...fila);
     });
     // console.log(coordenadas);
     console.log(coordenadasSpread);
 
-    
-
     function renderizarObjetos(volEntrada, volUnidad, coordenadas) {
-        let ladoCaja = Math.cbrt(volUnidad);
-        const geometriaCaja = new THREE.BoxGeometry(ladoCaja, ladoCaja, ladoCaja);
-        let relacion = Math.ceil(volEntrada/volUnidad)
-        for (let index = 0; index < relacion; index++) {
-          const caja = new THREE.Mesh(geometriaCaja)
-          caja.position.set(coordenadas[index][0], ladoCaja/2,coordenadas[index][1])
-          scene.add(caja);
-        }
+      let ladoCaja = Math.cbrt(volUnidad);
+      const geometriaCaja = new THREE.BoxGeometry(ladoCaja, ladoCaja, ladoCaja);
+      let relacion = Math.ceil(volEntrada / volUnidad);
+      for (let index = 0; index < relacion; index++) {
+        const caja = new THREE.Mesh(geometriaCaja);
+        caja.position.set(
+          coordenadas[index][0],
+          ladoCaja / 2,
+          coordenadas[index][1]
+        );
+        scene.add(caja);
+      }
     }
 
-    renderizarObjetos(volumenCarga,volumenEstandar,coordenadasSpread);
+    renderizarObjetos(volumenCarga, volumenEstandar, coordenadasSpread);
 
     // Animation loop
     function animate() {
