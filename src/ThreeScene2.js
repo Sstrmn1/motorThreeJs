@@ -14,11 +14,34 @@ function ThreeScene2() {
       0.1,
       1000
     );
-    const renderer = new THREE.WebGLRenderer();
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0x888888);
     sceneRef.current.appendChild(renderer.domElement);
+
     camera.position.set(1, 2, 3);
+
+    // Iluminacion
+    // Agregar iluminación ambiental
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    ambientLight.position.set(4, 3, 3);
+    scene.add(ambientLight);
+
+    // Agregar iluminación direccional 1
+    const directionalLight1 = new THREE.DirectionalLight(0xffffff, 0.8);
+    directionalLight1.position.set(3, 2, 0.1);
+    scene.add(directionalLight1);
+
+    // Agregar iluminación direccional 2
+    const directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.5);
+    directionalLight2.position.set(1, 0.5, 3);
+    scene.add(directionalLight2);
+
+    // Animation loop
+    function animate() {
+      requestAnimationFrame(animate);
+      renderer.render(scene, camera);
+    }
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableZoom = true; // Enable zooming
@@ -29,7 +52,7 @@ function ThreeScene2() {
     Estos datos tienen que recibirse desde otro componente donde se define el volumen de carga y
     el volumen estandar */
 
-    let volumenEntrada = 13.2;
+    let volumenEntrada = 3.125;
     let volumenUnitario = 1;
 
     let longitudLado = calcularLados(volumenEntrada, volumenUnitario);
@@ -56,6 +79,7 @@ function ThreeScene2() {
 
     let ladoCaja = Math.cbrt(volumenUnitario);
     let ladoCajaResiduo = Math.cbrt(residuo);
+    console.log(`El lado de la caja residuo es: ${ladoCajaResiduo}`);
     const geometriaPallet = new THREE.BoxGeometry(1.2, 0.155, 1.2);
     const geometriaCaja = new THREE.BoxGeometry(ladoCaja, ladoCaja, ladoCaja);
     const geometriaCajaResiduo = new THREE.BoxGeometry(
@@ -112,7 +136,12 @@ function ThreeScene2() {
         );
         scene.add(cajaUltima);
       } else {
-        let caja = new THREE.Mesh(geometriaCaja, boxMaterials);
+        let caja = {};
+        if (volumenEntrada < volumenUnitario) {
+          caja = new THREE.Mesh(geometriaCajaResiduo, boxMaterials);
+        } else {
+          caja = new THREE.Mesh(geometriaCaja, boxMaterials);
+        }
 
         caja.position.set(
           coordenadasSpread[index][0],
@@ -131,27 +160,6 @@ function ThreeScene2() {
       );
 
       scene.add(pallet);
-    }
-
-    // Iluminacion
-    // Agregar iluminación ambiental
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1);
-    scene.add(ambientLight);
-
-    // Agregar iluminación direccional 1
-    const directionalLight1 = new THREE.DirectionalLight(0xffffff, 0.8);
-    directionalLight1.position.set(1, 0.2, 0.1);
-    scene.add(directionalLight1);
-
-    // Agregar iluminación direccional 2
-    const directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.5);
-    directionalLight2.position.set(3, 0.5, 1);
-    scene.add(directionalLight2);
-
-    // Animation loop
-    function animate() {
-      requestAnimationFrame(animate);
-      renderer.render(scene, camera);
     }
 
     animate();
