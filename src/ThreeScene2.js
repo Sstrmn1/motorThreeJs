@@ -55,16 +55,25 @@ function ThreeScene2() {
 
     // Renderizar objetos
     let ladoCaja = Math.cbrt(volumenUnitario);
+    const geometriaPallet = new THREE.BoxGeometry(1.2, 0.155, 1.2);
     const geometriaCaja = new THREE.BoxGeometry(ladoCaja, ladoCaja, ladoCaja);
     let relacion = Math.ceil(volumenEntrada / volumenUnitario);
     for (let index = 0; index < relacion; index++) {
       const caja = new THREE.Mesh(geometriaCaja);
+      const pallet = new THREE.Mesh(geometriaPallet);
+      const posicionYCaja = ladoCaja / 2 + 0.155;
       caja.position.set(
         coordenadasSpread[index][0],
-        ladoCaja / 2,
+        posicionYCaja,
+        coordenadasSpread[index][1]
+      );
+      pallet.position.set(
+        coordenadasSpread[index][0],
+        0.155 / 2,
         coordenadasSpread[index][1]
       );
       scene.add(caja);
+      scene.add(pallet);
     }
 
     // Animation loop
