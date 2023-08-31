@@ -14,7 +14,7 @@ function ThreeScene2() {
       0.1,
       1000
     );
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    const renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0x888888);
     sceneRef.current.appendChild(renderer.domElement);
@@ -28,20 +28,14 @@ function ThreeScene2() {
     scene.add(ambientLight);
 
     // Agregar iluminación direccional 1
-    const directionalLight1 = new THREE.DirectionalLight(0xffffff, 0.8);
-    directionalLight1.position.set(3, 2, 0.1);
+    const directionalLight1 = new THREE.DirectionalLight(0xffffff, 3);
+    directionalLight1.position.set(5, 4, 0.1);
     scene.add(directionalLight1);
 
     // Agregar iluminación direccional 2
-    const directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.5);
-    directionalLight2.position.set(1, 0.5, 3);
+    const directionalLight2 = new THREE.DirectionalLight(0xffffff, 2);
+    directionalLight2.position.set(1, 4, 5);
     scene.add(directionalLight2);
-
-    // Animation loop
-    function animate() {
-      requestAnimationFrame(animate);
-      renderer.render(scene, camera);
-    }
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableZoom = true; // Enable zooming
@@ -52,7 +46,7 @@ function ThreeScene2() {
     Estos datos tienen que recibirse desde otro componente donde se define el volumen de carga y
     el volumen estandar */
 
-    let volumenEntrada = 3.125;
+    let volumenEntrada = 5.125;
     let volumenUnitario = 1;
 
     let longitudLado = calcularLados(volumenEntrada, volumenUnitario);
@@ -98,24 +92,24 @@ function ThreeScene2() {
     const palletTextureTapa = palletTextureLoader.load("/textures/1.png");
 
     const palletMaterials = [
-      new THREE.MeshBasicMaterial({ map: palletTextureFrente }),
-      new THREE.MeshBasicMaterial({ map: palletTextureFrente }),
-      new THREE.MeshBasicMaterial({ map: palletTextureTapa }),
-      new THREE.MeshBasicMaterial({ map: palletTextureTapa }),
-      new THREE.MeshBasicMaterial({ map: palletTextureLado }),
-      new THREE.MeshBasicMaterial({ map: palletTextureLado }),
+      new THREE.MeshStandardMaterial({ map: palletTextureFrente }),
+      new THREE.MeshStandardMaterial({ map: palletTextureFrente }),
+      new THREE.MeshStandardMaterial({ map: palletTextureTapa }),
+      new THREE.MeshStandardMaterial({ map: palletTextureTapa }),
+      new THREE.MeshStandardMaterial({ map: palletTextureLado }),
+      new THREE.MeshStandardMaterial({ map: palletTextureLado }),
     ];
 
     const textureLoader = new THREE.TextureLoader();
     const cartonTexture = textureLoader.load("/textures/carton.jpg");
 
     const boxMaterials = [
-      new THREE.MeshBasicMaterial({ map: cartonTexture }), // Lado izquierdo
-      new THREE.MeshBasicMaterial({ map: cartonTexture }), // Lado derecho
-      new THREE.MeshBasicMaterial({ map: cartonTexture }), // Frente
-      new THREE.MeshBasicMaterial({ map: cartonTexture }), // Trasero
-      new THREE.MeshBasicMaterial({ map: cartonTexture }), // Arriba
-      new THREE.MeshBasicMaterial({ map: cartonTexture }), // Abajo
+      new THREE.MeshStandardMaterial({ map: cartonTexture }), // Lado izquierdo
+      new THREE.MeshStandardMaterial({ map: cartonTexture }), // Lado derecho
+      new THREE.MeshStandardMaterial({ map: cartonTexture }), // Frente
+      new THREE.MeshStandardMaterial({ map: cartonTexture }), // Trasero
+      new THREE.MeshStandardMaterial({ map: cartonTexture }), // Arriba
+      new THREE.MeshStandardMaterial({ map: cartonTexture }), // Abajo
     ];
 
     // Renderizar objetos, puesta en escena
@@ -160,6 +154,12 @@ function ThreeScene2() {
       );
 
       scene.add(pallet);
+    }
+
+    // Animation loop
+    function animate() {
+      requestAnimationFrame(animate);
+      renderer.render(scene, camera);
     }
 
     animate();
