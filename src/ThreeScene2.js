@@ -1,13 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import {
-  calcularLados,
-  crearCoordenadas,
-  crearMatriz,
-  residuoFlotante,
-} from "./funciones";
-import { floorPowerOfTwo } from "three/src/math/MathUtils";
+import { calcularLados, crearCoordenadas, residuoFlotante } from "./funciones";
 
 function ThreeScene2() {
   const sceneRef = useRef(null);
@@ -35,10 +29,8 @@ function ThreeScene2() {
     Estos datos tienen que recibirse desde otro componente donde se define el volumen de carga y
     el volumen estandar */
 
-    let volumenEntrada = 8.1;
+    let volumenEntrada = 13.2;
     let volumenUnitario = 1;
-
-    // crearMatriz(volumenEntrada, volumenUnitario);
 
     let longitudLado = calcularLados(volumenEntrada, volumenUnitario);
     const grid = new THREE.GridHelper(
@@ -60,7 +52,8 @@ function ThreeScene2() {
     let residuo = residuoFlotante(volumenEntrada, volumenUnitario);
     console.log(residuo);
 
-    // Renderizar objetos
+    // Cargar objetos
+
     let ladoCaja = Math.cbrt(volumenUnitario);
     let ladoCajaResiduo = Math.cbrt(residuo);
     const geometriaPallet = new THREE.BoxGeometry(1.2, 0.155, 1.2);
@@ -74,14 +67,43 @@ function ThreeScene2() {
     let posicionYCajaResiduo = ladoCajaResiduo / 2 + 0.155;
     let relacion = Math.ceil(volumenEntrada / volumenUnitario);
 
+    // Cargar texturas
+    const palletTextureLoader = new THREE.TextureLoader();
+    const palletTextureLado = palletTextureLoader.load("/textures/3.png");
+    const palletTextureFrente = palletTextureLoader.load("/textures/2.png");
+    const palletTextureTapa = palletTextureLoader.load("/textures/1.png");
+
+    const palletMaterials = [
+      new THREE.MeshBasicMaterial({ map: palletTextureFrente }),
+      new THREE.MeshBasicMaterial({ map: palletTextureFrente }),
+      new THREE.MeshBasicMaterial({ map: palletTextureTapa }),
+      new THREE.MeshBasicMaterial({ map: palletTextureTapa }),
+      new THREE.MeshBasicMaterial({ map: palletTextureLado }),
+      new THREE.MeshBasicMaterial({ map: palletTextureLado }),
+    ];
+
+    const textureLoader = new THREE.TextureLoader();
+    const cartonTexture = textureLoader.load("/textures/carton.jpg");
+
+    const boxMaterials = [
+      new THREE.MeshBasicMaterial({ map: cartonTexture }), // Lado izquierdo
+      new THREE.MeshBasicMaterial({ map: cartonTexture }), // Lado derecho
+      new THREE.MeshBasicMaterial({ map: cartonTexture }), // Frente
+      new THREE.MeshBasicMaterial({ map: cartonTexture }), // Trasero
+      new THREE.MeshBasicMaterial({ map: cartonTexture }), // Arriba
+      new THREE.MeshBasicMaterial({ map: cartonTexture }), // Abajo
+    ];
+
+    // Renderizar objetos, puesta en escena
+
     for (let index = 0; index < relacion; index++) {
       if (index === relacion - 1) {
         let cajaUltima = {};
         if (residuo === 0) {
-          cajaUltima = new THREE.Mesh(geometriaCaja);
+          cajaUltima = new THREE.Mesh(geometriaCaja, boxMaterials);
           posicionYCajaResiduo = posicionYCaja;
         } else {
-          cajaUltima = new THREE.Mesh(geometriaCajaResiduo);
+          cajaUltima = new THREE.Mesh(geometriaCajaResiduo, boxMaterials);
         }
         cajaUltima.position.set(
           coordenadasSpread[index][0],
@@ -90,7 +112,7 @@ function ThreeScene2() {
         );
         scene.add(cajaUltima);
       } else {
-        const caja = new THREE.Mesh(geometriaCaja);
+        let caja = new THREE.Mesh(geometriaCaja, boxMaterials);
 
         caja.position.set(
           coordenadasSpread[index][0],
@@ -100,7 +122,7 @@ function ThreeScene2() {
         scene.add(caja);
       }
 
-      const pallet = new THREE.Mesh(geometriaPallet);
+      let pallet = new THREE.Mesh(geometriaPallet, palletMaterials);
 
       pallet.position.set(
         coordenadasSpread[index][0],
@@ -110,6 +132,21 @@ function ThreeScene2() {
 
       scene.add(pallet);
     }
+
+    // Iluminacion
+    // Agregar iluminación ambiental
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+    scene.add(ambientLight);
+
+    // Agregar iluminación direccional 1
+    const directionalLight1 = new THREE.DirectionalLight(0xffffff, 0.8);
+    directionalLight1.position.set(1, 0.2, 0.1);
+    scene.add(directionalLight1);
+
+    // Agregar iluminación direccional 2
+    const directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.5);
+    directionalLight2.position.set(3, 0.5, 1);
+    scene.add(directionalLight2);
 
     // Animation loop
     function animate() {
