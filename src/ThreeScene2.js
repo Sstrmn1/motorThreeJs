@@ -30,12 +30,12 @@ function ThreeScene2() {
     Estos datos tienen que recibirse desde otro componente donde se define el volumen de carga y
     el volumen estandar */
 
-    let volumenCarga = 11;
-    let volumenEstandar = 1;
+    let volumenEntrada = 7;
+    let volumenUnitario = 1;
 
-    // crearMatriz(volumenCarga, volumenEstandar);
+    // crearMatriz(volumenEntrada, volumenUnitario);
 
-    let longitudLado = calcularLados(volumenCarga, volumenEstandar);
+    let longitudLado = calcularLados(volumenEntrada, volumenUnitario);
     const grid = new THREE.GridHelper(
       longitudLado,
       longitudLado,
@@ -44,7 +44,7 @@ function ThreeScene2() {
     );
     scene.add(grid);
 
-    let coordenadas = crearCoordenadas(volumenCarga, volumenEstandar);
+    let coordenadas = crearCoordenadas(volumenEntrada, volumenUnitario);
 
     let coordenadasSpread = [];
     coordenadas.forEach((fila) => {
@@ -53,22 +53,19 @@ function ThreeScene2() {
     // console.log(coordenadas);
     console.log(coordenadasSpread);
 
-    function renderizarObjetos(volEntrada, volUnidad, coordenadas) {
-      let ladoCaja = Math.cbrt(volUnidad);
-      const geometriaCaja = new THREE.BoxGeometry(ladoCaja, ladoCaja, ladoCaja);
-      let relacion = Math.ceil(volEntrada / volUnidad);
-      for (let index = 0; index < relacion; index++) {
-        const caja = new THREE.Mesh(geometriaCaja);
-        caja.position.set(
-          coordenadas[index][0],
-          ladoCaja / 2,
-          coordenadas[index][1]
-        );
-        scene.add(caja);
-      }
+    // Renderizar objetos
+    let ladoCaja = Math.cbrt(volumenUnitario);
+    const geometriaCaja = new THREE.BoxGeometry(ladoCaja, ladoCaja, ladoCaja);
+    let relacion = Math.ceil(volumenEntrada / volumenUnitario);
+    for (let index = 0; index < relacion; index++) {
+      const caja = new THREE.Mesh(geometriaCaja);
+      caja.position.set(
+        coordenadasSpread[index][0],
+        ladoCaja / 2,
+        coordenadasSpread[index][1]
+      );
+      scene.add(caja);
     }
-
-    renderizarObjetos(volumenCarga, volumenEstandar, coordenadasSpread);
 
     // Animation loop
     function animate() {
